@@ -1,0 +1,6 @@
+Debug/
+Release/
+BinaryTree/Debug/
+BinaryTree/Release/
+*.user
+*.filters
