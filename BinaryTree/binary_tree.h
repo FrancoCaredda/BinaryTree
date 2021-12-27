@@ -1,6 +1,12 @@
 #ifndef BINARY_TREE
 #define BINARY_TREE
 
+#include <cmath>
+
+#define EPSILON 0.00000001
+#define DOUBLES_EQUAL(X, Y) fabs((X) - (Y)) < EPSILON
+#define DOUBLE_EQUAL_ZERO(X) fabs((X)) < EPSILON
+
 // The Node of BinaryTree
 template<typename T>
 struct Node
@@ -15,7 +21,7 @@ struct Node
 	Node(const T& value)
 		: Value(value) { }
 	Node(const T& value, Node<T>* left, Node<T>* right, Node<T>* parent)
-		: Value(value), Left(left), Right(right), Parent(parent) { };
+		: Value(value), Left(left), Right(right), Parent(parent) { }
 };
 
 // Implementation of Binary search tree data structure
@@ -215,6 +221,66 @@ Node<T>* BinaryTree<T>::FindMin(Node<T>* root) noexcept
 		currentNode = currentNode->Left;
 
 	return currentNode;
+}
+
+// Template specialization for floats and doubles
+
+template<>
+void BinaryTree<double>::InsertInternal(Node<double>* node, Node<double>* root) noexcept
+{
+	if (node->Value < root->Value || DOUBLES_EQUAL(node->Value, root->Value))
+	{
+		if (root->Left == nullptr)
+		{
+			root->Left = node;
+			node->Parent = root;
+
+			return;
+		}
+
+		InsertInternal(node, root->Left);
+	}
+	else
+	{
+		if (root->Right == nullptr)
+		{
+			root->Right = node;
+			node->Parent = root;
+
+			return;
+		}
+
+		InsertInternal(node, root->Right);
+	}
+}
+
+template<>
+void BinaryTree<float>::InsertInternal(Node<float>* node, Node<float>* root) noexcept
+{
+	if (node->Value < root->Value || DOUBLES_EQUAL(node->Value, root->Value))
+	{
+		if (root->Left == nullptr)
+		{
+			root->Left = node;
+			node->Parent = root;
+
+			return;
+		}
+
+		InsertInternal(node, root->Left);
+	}
+	else
+	{
+		if (root->Right == nullptr)
+		{
+			root->Right = node;
+			node->Parent = root;
+
+			return;
+		}
+
+		InsertInternal(node, root->Right);
+	}
 }
 
 #endif // !BINARY_TREE

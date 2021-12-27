@@ -11,7 +11,6 @@ int main(void)
 	for (int i = 0; i < array.size(); i++)
 		tree.Insert(array[i]);
 
-	
 	tree.Bypass(tree.GetRoot(), [](Node<int>* node) { std::cout << node->Value << " "; });
 
 	std::cout << std::endl;
